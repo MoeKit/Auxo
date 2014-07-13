@@ -1,3 +1,1 @@
-var auxo;
-
-module.exports = auxo;
+module.exports = require('./src/master');
