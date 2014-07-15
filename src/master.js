@@ -1,6 +1,7 @@
 // 主调用脚本，封装了iframe的数据获取
 // iframe可以随页面加载，也可以用js加载
 // @todo 考虑不同环境的url不一样
+// @todo ready 返回store操作对象
 var $ = require('jquery');
 var Then = require('then');
 var id = "Auxo";
@@ -21,7 +22,6 @@ var ready = function (callback) {
     } else {
         var $iframe = $('<iframe id="' + id + '"></iframe>')
             .hide()
-            .appendTo('body')
             .load(function () {
                 loaded = true;
                 console.log('loaded');
@@ -30,13 +30,13 @@ var ready = function (callback) {
                     callback(null, 'ready');
                 });
             })
-            .attr('src', iframeUrl);
+            .attr('src', iframeUrl)
+            .appendTo('body');
     }
 };
 
 exports.ready = function () {
     return Then(function (next, arg) {
-        console.log(arg);
         ready(next);
     });
 }
