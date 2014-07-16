@@ -12,10 +12,8 @@ var loaded = false;
 // 初始化, 确保iframe加载完成
 var ready = function (callback) {
     document.domain = 'seedit.com';
-    console.time('load');
     if ($('#' + id).length) {
         loaded = true;
-        console.timeEnd('load');
         Then.nextTick(function () {
             callback(null, 'already ready');
         });
@@ -24,8 +22,6 @@ var ready = function (callback) {
             .hide()
             .load(function () {
                 loaded = true;
-                console.log('loaded');
-                console.timeEnd('load');
                 Then.nextTick(function () {
                     callback(null, 'ready');
                 });
@@ -39,4 +35,4 @@ exports.ready = function () {
     return Then(function (next, arg) {
         ready(next);
     });
-}
+};
