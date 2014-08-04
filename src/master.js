@@ -6,12 +6,14 @@ var $ = require('jquery');
 var Then = require('then');
 var id = "Auxo";
 var hasIframe = ($('#' + id).length) > 0;
-var iframeUrl = 'http://common.seedit.com/cms/content.html?type=page&id=53bcf92ca3c3b1934e000064';
 var loaded = false;
 
 // 初始化, 确保iframe加载完成
-var ready = function (callback) {
+var ready = function (option, callback) {
     document.domain = 'seedit.com';
+    var iUrl = 'http://common.seedit.com/cms/content.html?type=page&id=53bcf92ca3c3b1934e000064';
+    var iframeUrl = option.url || iUrl;
+    
     if ($('#' + id).length) {
         loaded = true;
         Then.nextTick(function () {
@@ -31,8 +33,8 @@ var ready = function (callback) {
     }
 };
 
-exports.ready = function () {
+exports.ready = function (option) {
     return Then(function (next, arg) {
-        ready(next);
+        ready(option, next);
     });
 };
